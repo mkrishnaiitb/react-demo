@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Speech-to-Text Demo</title>
+  </head>
+  <body>
+    <h1>Speech-to-Text Demo</h1>
+    <p>Click the button below and start speaking to transcribe your speech into text:</p>
+    <button id="start-btn">Start Transcription</button>
+    <div id="transcription"></div>
+
+    <script>
+      // Check if browser supports Web Speech API
+      if (!("webkitSpeechRecognition" in window)) {
+        alert("Your browser doesn't support speech recognition. Please upgrade to a modern browser.");
+      } else {
+        // Create new instance of SpeechRecognition
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = "hi-IN"; // Set language to Hindi
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        // Add event listeners to handle speech recognition events
+        recognition.onstart = () => console.log("Speech recognition started.");
+        recognition.onerror = (event) => console.error(`Speech recognition error: ${event.error}`);
+        recognition.onresult = (event) => {
+          const transcript = event.results[event.results.length - 1][0].transcript;
+          console.log(`Transcript: ${transcript}`);
+          const transcript1 = event.results[event.results.length - 1][0].transcript;
+
+
+          document.getElementById("transcription").innerHTML = transcript;
+
+          
+        };
+
+        // Add click event listener to start button
+        document.getElementById("start-btn").addEventListener("click", () => {
+          recognition.start();
+        });
+      }
+    </script>
+  </body>
+</html>
